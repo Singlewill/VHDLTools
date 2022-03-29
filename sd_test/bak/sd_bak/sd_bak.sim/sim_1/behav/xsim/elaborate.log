@@ -1,0 +1,29 @@
+Vivado Simulator 2017.3
+Copyright 1986-1999, 2001-2016 Xilinx, Inc. All Rights Reserved.
+Running: /opt/vivado/Vivado/2017.3/bin/unwrapped/lnx64.o/xelab -wto 60a4b3ad770a46e4a8ad592d43f2ade5 --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot TB_SIMPLE_SD_behav xil_defaultlib.TB_SIMPLE_SD -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.std_logic_arith
+Compiling package ieee.std_logic_unsigned
+Compiling package xil_defaultlib.de0_nano_const_pkg
+Compiling package xil_defaultlib.sd_const_pkg
+Compiling package ieee.numeric_std
+Compiling architecture crc_a of entity xil_defaultlib.crc [\crc(length=16,polynomial="00010...]
+Compiling architecture crc_a of entity xil_defaultlib.crc [\crc(length=7,polynomial="000100...]
+Compiling architecture prescaler_a of entity xil_defaultlib.prescaler [\prescaler(divisor=62)\]
+Compiling architecture prescaler_a of entity xil_defaultlib.prescaler [\prescaler(divisor=2)\]
+Compiling architecture sd_transceiver_a of entity xil_defaultlib.sd_transceiver [sd_transceiver_default]
+Compiling architecture sd_controller_a of entity xil_defaultlib.sd_controller [sd_controller_default]
+Compiling architecture debounce_a of entity xil_defaultlib.debounce [\debounce(n=50000)\]
+Compiling architecture tick_extend_a of entity xil_defaultlib.tick_extend [tick_extend_default]
+Compiling architecture one_shot_a of entity xil_defaultlib.one_shot [one_shot_default]
+Compiling architecture simple_sd_a of entity xil_defaultlib.simple_sd [simple_sd_default]
+Compiling architecture behavor of entity xil_defaultlib.tb_simple_sd
+Built simulation snapshot TB_SIMPLE_SD_behav

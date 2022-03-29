@@ -1,0 +1,35 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/de0_nano_const_pkg.vhd" into library xil_defaultlib
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/crc.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity crc
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/debounce.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity debounce
+WARNING: [VRFC 10-471] case choice must be a locally static expression [/home/ll/workdir/fpga_test/VHDL/sd_test/bak/debounce.vhd:81]
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/one_shot.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity one_shot
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/prescaler.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity prescaler
+WARNING: [VRFC 10-471] case choice must be a locally static expression [/home/ll/workdir/fpga_test/VHDL/sd_test/bak/prescaler.vhd:71]
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/sd_const_pkg.vhd" into library xil_defaultlib
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/sd_controller.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity sd_controller
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/sd_transceiver.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity sd_transceiver
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/simple_sd.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity simple_sd
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/tick_extend.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity tick_extend
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/tb_simple_sd.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity TB_SIMPLE_SD
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/tb_simple_sd.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity TB_SIMPLE_SD
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/tb_simple_sd.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity TB_SIMPLE_SD
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/sd_transceiver.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity sd_transceiver
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/tb_simple_sd.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity TB_SIMPLE_SD
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/sd_const_pkg.vhd" into library xil_defaultlib
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/sd_transceiver.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity sd_transceiver
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/tb_simple_sd.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity TB_SIMPLE_SD

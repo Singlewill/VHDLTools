@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="TB_SIMPLE_SD_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="TB_SIMPLE_SD" />
+            <top_module name="de0_nano_const_pkg" />
+            <top_module name="sd_const_pkg" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="2394333334fs"></ZoomStartTime>
+      <ZoomEndTime time="3268333335fs"></ZoomEndTime>
+      <Cursor1Time time="2540000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="159"></NameColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="7" />
+   <wvobject type="logic" fp_name="/TB_SIMPLE_SD/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TB_SIMPLE_SD/rst">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TB_SIMPLE_SD/U_SIMPLE_SD/u_sd_controller/u_sd_transceiver/clk_en_init2">
+      <obj_property name="ElementShortName">clk_en_init2</obj_property>
+      <obj_property name="ObjectShortName">clk_en_init2</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TB_SIMPLE_SD/U_SIMPLE_SD/u_sd_controller/u_sd_transceiver/clk_init">
+      <obj_property name="ElementShortName">clk_init</obj_property>
+      <obj_property name="ObjectShortName">clk_init</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TB_SIMPLE_SD/U_SIMPLE_SD/u_sd_controller/u_sd_transceiver/sd_clk_en">
+      <obj_property name="ElementShortName">sd_clk_en</obj_property>
+      <obj_property name="ObjectShortName">sd_clk_en</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TB_SIMPLE_SD/U_SIMPLE_SD/u_sd_controller/u_sd_transceiver/sd_clk">
+      <obj_property name="ElementShortName">sd_clk</obj_property>
+      <obj_property name="ObjectShortName">sd_clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/TB_SIMPLE_SD/U_SIMPLE_SD/u_sd_controller/u_sd_transceiver/clk_en_init">
+      <obj_property name="ElementShortName">clk_en_init</obj_property>
+      <obj_property name="ObjectShortName">clk_en_init</obj_property>
+   </wvobject>
+</wave_config>

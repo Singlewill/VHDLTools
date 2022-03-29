@@ -1,0 +1,130 @@
+
+				when SD_RESP_INIT	=>
+					--! R0不需要回应
+					if cmd_in.resp = R0 then
+						sd_tx_state_next 	<=  SD_RESP_FINISH;
+					--! 检测resp开头的第一个'0'
+					elsif sd_cmd = '0' then
+						sd_tx_state_next 	<=  SD_RESP_PRE;
+					elsif cnt = resp_timeout then
+						sd_tx_state_next 	<=  SD_RESP_FINISH;
+					end if;
+
+				--! 接受resp第一部分, 主要为越过R2响应中不需要进行CRC校验的6个'1'
+				when SD_RESP_PRE	=>
+					case cmd_in.resp is
+						when R1 | R1b | R3 | R6 | R7 	=>
+							sd_tx_state_next	<= SD_RESP_RECV;
+						when R2						=>
+							--! 6bit '1'
+							if cnt = 6	then
+								sd_tx_state_next	<= SD_RESP_RECV;
+							end if;
+						when others					=>
+							sd_tx_state_next <= SD_RESP_FINISH;
+					end case;
+				--! 接受resp第二部分
+				when SD_RESP_RECV	=>
+					case cmd_in.resp is
+						when R1 | R1b | R6 | R7 	=>
+							--! 6 index + 32 status
+							if cnt = 37 then
+								sd_tx_state_next <= SD_RESP_CRC;
+							end if;
+						when R2						=>
+							--! 127 CID/CSD - 7bit crc
+							if cnt = 119 then
+								sd_tx_state_next	<= SD_RESP_CRC;
+							end if;
+						when R3						=>
+							-- 6 reserved + 32 status + 7 reserved
+							if cnt = 44 then
+								sd_tx_state_next	<= SD_RESP_CRC;
+							end if;
+						when others					=>
+							sd_tx_state_next <= SD_RESP_FINISH;
+					end case;
+				when SD_RESP_CRC	=>
+					if Clk_tick = '1' and cnt = (crc7_len-1) then
+						sd_tx_state_next <= SD_RESP_STOP;
+					end if;
+				when SD_RESP_STOP	=>
+					if Clk_tick = '1' then
+						if cmd_in.resp = R1b then
+							sd_tx_state_next <= SD_RESP_BUSY;
+						else
+							sd_tx_state_next <= SD_RESP_FINISH;
+						end if;
+					else
+						sd_tx_state_next <= SD_RESP_STOP;
+					end if;
+				when SD_RESP_BUSY	=>
+					if Clk_tick = '1' then
+						if sd_dat(0) = '1' or cnt = (timeout_1s - 1) then
+							sd_tx_state_next <= SD_RESP_FINISH;
+						end if;
+					else
+						sd_tx_state_next <= SD_RESP_BUSY;
+					end if;
+
+
+
+				when SD_RESP_FINISH	=>
+					if Clk_tick = '1' then
+						sd_tx_state_next <= SD_TX_IDLE;
+					else
+						sd_tx_state_next <= SD_RESP_FINISH;
+					end if;
+				when others 		=> 
+					sd_tx_state_next <= SD_INIT;
+			end case;
+
+
+
+
+
+	U_RESP_STAT : process(Clk)
+	begin
+		if Clk'event and Clk = '1' then
+
+			if sd_tx_state_cur = SD_RESP_INIT then
+				Resp_stat(e_timeout) <= '0';
+			---! 检测不到resp起始位
+			elsif sd_tx_state_cur = SD_RESP_INIT and cnt = resp_timeout then
+				Resp_stat(e_timeout) <= '1';
+			end if;
+
+			if sd_tx_state_cur = SD_TX_IDLE then
+				Resp_stat(e_common) <= '0';
+				--! resp第一bit非0
+			elsif (sd_tx_state_cur = SD_RESP_PRE and  cnt = 0 and sd_cmd /= '0') or
+				--! resp无停止位
+				(sd_tx_state_cur = SD_RESP_STOP and sd_cmd /= '1')  or
+				--! R1b响应之后 data线一直忙
+				(sd_tx_state_cur = SD_RESP_BUSY and cnt = timeout_1s - 1)  then
+				Resp_stat(e_common) <= '1';
+			end if;
+
+			if sd_tx_state_cur = SD_TX_IDLE then
+				Resp_stat(e_crc) 	<= '0';
+				--! CRC校验错误
+			elsif sd_tx_state_cur = SD_RESP_CRC and sd_cmd /= crc_out then
+				Resp_stat(e_crc) 	<= '1';
+			end if;
+		end if;
+	end process;
+
+	U_RESP_SHIFT : process(Clk, Rst_n)
+	begin
+		if Clk'event and Clk = '1' then
+			if Rst_n = '0' then
+				resp_shift <= (others => '0');
+			elsif sd_tx_state_cur = SD_RESP_INIT then
+				resp_shift <= (others => '0');
+			elsif sd_tx_state_cur = SD_RESP_PRE or 
+					sd_tx_state_cur = SD_RESP_RECV or
+					sd_tx_state_cur = SD_RESP_CRC then
+				resp_shift <= resp_shift(resp_shift'length - 2 downto 0) & sd_cmd;
+			end if;
+		end if;
+	end process;

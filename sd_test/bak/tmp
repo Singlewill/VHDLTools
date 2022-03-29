@@ -1,0 +1,149 @@
+if cmd_state = s_idle then
+	case init_state is
+		-- reset all signals
+		when s_init =>
+			-- sd_ctrl
+			fast			<= '0';
+			wide_bus	<= '0';
+			-- internal signals
+			rca				<= (others=>'0');
+			hcs				<= '0';
+			bus_width	<= (others=>'0');
+			sw_mode		<= '0';
+			fg1				<= (others=>'0');
+			--------------
+			cnt				<= 0;
+			cmd_reg 	<= cmd0;
+			allow_cmd_error <= '0';
+			--------------
+			cmd_state <= s_idle;
+			init_state <= s_prepare_clk;
+		-- initialize card with 74 clk-cycles before the first command
+		when s_prepare_clk =>
+			if cnt = 74 then
+				-- write cmd0 to SD-Card: reset
+				cmd_reg 	<= cmd0;
+				cmd_state <= s_cmd;
+				init_state <= s_cmd0;
+			end if;
+		-- write cmd8: send interface condition
+		when s_cmd0 =>
+			cmd_reg		<= cmd8;
+			cmd_state <= s_cmd;
+			init_state <= s_cmd8;
+			-- expect error: SCSD-Card don't respond to cmd8
+			allow_cmd_error <= '1';
+		-- select if host should support SDHC (hcs)
+		when s_cmd8 =>
+			if resp_stat = resp_stat_valid then
+				-- when card responded to cmd8, card is HCSD
+				hcs <= '1';
+				init_state <= s_hcs;
+			elsif resp_stat(e_timeout) = '1' then
+				-- when card did'nt respond to cmd8, card is SCSD
+				hcs <= '0';
+				init_state <= s_hcs;
+			else
+				unit_state <= s_error;
+			end if;
+		-- write acmd41 (set hcs)
+		when s_hcs =>
+			cmd_reg		<= acmd41;
+			cmd_state <= s_acmd;
+			init_state <= s_acmd41;
+		-- wait until card is ready
+		when s_acmd41 =>
+			if resp.arg(31) = '0' then
+				-- card is busy, send acmd41 again
+				cmd_reg		<= acmd41;
+				cmd_state <= s_acmd;
+			else
+				-- card is read, send cmd2: ask card to send cid
+				cmd_reg		<= cmd2;
+				cmd_state <= s_cmd;
+				init_state <= s_cmd2;
+			end if;
+		-- write cmd3: get relative card address (rca)
+		when s_cmd2 =>
+			cmd_reg		<= cmd3;
+			cmd_state <= s_cmd;
+			init_state <= s_cmd3;
+		-- save rca
+		when s_cmd3 =>
+			rca <= resp.arg(31 downto 16);
+			init_state <= s_rca;
+		-- write cmd7: swtich to 'transfer' state
+		when s_rca =>
+			cmd_reg	<= cmd7;
+			cmd_state <= s_cmd;
+			init_state <= s_cmd7;
+		-- write acmd42: disable cards internal pull-up
+		when s_cmd7 =>
+			cmd_reg <= acmd42;
+			cmd_state <= s_acmd;
+			init_state <= s_acmd42;
+		-- request 4-bit sd-bus mode when desired
+		when s_acmd42 =>
+			if mode.wide_bus = '1' then
+				bus_width <= "10";
+				init_state <= s_bus_width;
+			else
+				init_state <= s_speed;
+			end if;
+		-- write acmd6: set bus-width
+		when s_bus_width =>
+			cmd_reg		<= acmd6;
+			cmd_state <= s_acmd;
+			init_state <= s_acmd6;
+		-- select 4-bit mode
+		when s_acmd6 =>
+			wide_bus <= '1';
+			init_state <= s_speed;
+		-- request High-Speed mode when desired
+		when s_speed =>
+			if mode.fast = '1' then
+				sw_mode <= '1'; -- switch function = mode 1 : set function
+				fg1 <= x"1";		-- function group 1 = 0x1: High-Speed mode
+				init_state <= s_switch_func;
+			else
+				init_state <= s_finish;
+			end if;
+		-- write cmd6: switch function (switch speed mode)
+		when s_switch_func =>
+			cmd_reg <= cmd6;
+			cmd_state <= s_cmd;
+			init_state <= s_cmd6;
+			allow_cmd_error <= '1';
+		-- when card responds to cmd6: read 'switch function status'
+		when s_cmd6 =>
+			if resp_stat = resp_stat_valid then
+				-- read a single 512-bit block: response of cmd6
+				status_width <= 512;
+				read_status_state <= s_tick;
+				init_state <= s_switch_status;
+			else
+				init_state <= s_finish;
+			end if;
+		-- check switch function status if switch to High-Speed mode was successfull
+		when s_switch_status =>
+			if read_status_state = s_idle then
+				if dat_stat_read /= dat_stat_valid then
+					init_state <= s_finish;
+				elsif status_reg(379 downto 376) = x"1" then
+					init_state <= s_switch_delay;
+					cnt <= 0;
+				end if;
+			end if;
+		-- delay switch of clk-frequency by 8 clk-cylces
+		when s_switch_delay =>
+			if cnt = 8 then
+				fast <= '1';
+				init_state <= s_finish;
+			end if;
+		-- finish initialisation and go to transfer state
+		when s_finish =>
+			unit_state <= s_transfer;
+		when others =>
+			init_state <= s_init;
+	end case;
+end if;

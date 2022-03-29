@@ -1,0 +1,16 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../../de0_nano_const_pkg.vhd" \
+"../../../../../crc.vhd" \
+"../../../../../debounce.vhd" \
+"../../../../../one_shot.vhd" \
+"../../../../../prescaler.vhd" \
+"../../../../../sd_const_pkg.vhd" \
+"../../../../../sd_controller.vhd" \
+"../../../../../sd_transceiver.vhd" \
+"../../../../../simple_sd.vhd" \
+"../../../../../tick_extend.vhd" \
+"../../../../../tb_simple_sd.vhd" \
+
+# Do not sort compile order
+nosort

@@ -1,0 +1,3 @@
+1, deserialiser_1_10里IDELAY2使用的CE信号，添加控制
+2, tmds_decoder模块结构乱，重新整理
+3, alignment_detect结构整理

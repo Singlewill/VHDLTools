@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Webtalk v2017.3 (64-bit)
+# SW Build 2018833 on Wed Oct  4 19:58:07 MDT 2017
+# IP Build 2016188 on Wed Oct  4 21:52:56 MDT 2017
+# Start of session at: Sat Jan 27 14:32:31 2018
+# Process ID: 2329
+# Current directory: /home/ll/workdir/fpga_test/VHDL/sd_test/bak/sd_bak/sd_bak.sim/sim_1/behav/xsim
+# Command line: wbtcv -mode batch -source /home/ll/workdir/fpga_test/VHDL/sd_test/bak/sd_bak/sd_bak.sim/sim_1/behav/xsim/xsim.dir/TB_SIMPLE_SD_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: /home/ll/workdir/fpga_test/VHDL/sd_test/bak/sd_bak/sd_bak.sim/sim_1/behav/xsim/webtalk.log
+# Journal file: /home/ll/workdir/fpga_test/VHDL/sd_test/bak/sd_bak/sd_bak.sim/sim_1/behav/xsim/webtalk.jou
+#-----------------------------------------------------------
+source /home/ll/workdir/fpga_test/VHDL/sd_test/bak/sd_bak/sd_bak.sim/sim_1/behav/xsim/xsim.dir/TB_SIMPLE_SD_behav/webtalk/xsim_webtalk.tcl -notrace
+webtalk_transmit: Time (s): cpu = 00:00:00.51 ; elapsed = 00:00:07 . Memory (MB): peak = 291.293 ; gain = 0.000 ; free physical = 1210 ; free virtual = 7605
+INFO: [Common 17-206] Exiting Webtalk at Sat Jan 27 14:32:38 2018...

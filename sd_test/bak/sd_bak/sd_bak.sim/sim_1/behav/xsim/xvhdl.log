@@ -1,0 +1,5 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/sd_const_pkg.vhd" into library xil_defaultlib
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/sd_transceiver.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity sd_transceiver
+INFO: [VRFC 10-163] Analyzing VHDL file "/home/ll/workdir/fpga_test/VHDL/sd_test/bak/tb_simple_sd.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity TB_SIMPLE_SD

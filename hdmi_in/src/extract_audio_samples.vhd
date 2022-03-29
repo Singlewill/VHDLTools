@@ -1,0 +1,74 @@
+------------------------------------------------------------------------------
+--! 	@file		extract_audio_samples.vhd
+--! 	@function	1, 检测Audio Sample Packet,并从中音频信息
+--! 				先不做了。。。
+--!		@version	
+-----------------------------------------------------------------------------
+--library IEEE;
+--use IEEE.STD_LOGIC_1164.ALL;
+--use IEEE.NUMERIC_STD.ALL;
+--
+--entity EXTRACT_AUDIO_SAMPLES is
+--	port ( 
+--			Clk                 : in std_logic;
+--		   	adp_data_valid      : in std_logic;
+--		   	adp_header_bit      : in std_logic;
+--		   	adp_frame_bit       : in std_logic;
+--		   	adp_subpacket0_bits : in std_logic_vector (1 downto 0);
+--		   	adp_subpacket1_bits : in std_logic_vector (1 downto 0);
+--		   	adp_subpacket2_bits : in std_logic_vector (1 downto 0);
+--		   	adp_subpacket3_bits : in std_logic_vector (1 downto 0);
+--		   	audio_de            : out std_logic;
+--		   	audio_channel       : out std_logic_vector (2 downto 0);
+--		   	audio_sample        : out std_logic_vector (23 downto 0)
+--	   );
+--end EXTRACT_AUDIO_SAMPLES;
+--
+--architecture Behavioral of EXTRACT_AUDIO_SAMPLES is
+--    signal header_bits        : std_logic_vector (31 downto 0);
+--    signal frame_bits         : std_logic_vector (31 downto 0);
+--    signal subpacket0_bits    : std_logic_vector (63 downto 0);
+--    signal subpacket1_bits    : std_logic_vector (63 downto 0);
+--    signal subpacket2_bits    : std_logic_vector (63 downto 0);
+--    signal subpacket3_bits    : std_logic_vector (63 downto 0);
+--    signal grab_other_channel : std_logic := '0';
+--
+--	signal clk_cnt			:	std_logic_vector(5 downto 0);
+--begin
+--
+--process(Clk)
+--    begin
+--        if Clk'event and Clk = '1' then
+--            -----------------------------------------------
+--            -- Move the incoming bits into a shift register
+--            -----------------------------------------------
+--            header_bits     <= adp_header_bit      & header_bits(header_bits'high downto 1);
+--            frame_bits      <= (adp_frame_bit and adp_data_valid) & frame_bits(frame_bits'high   downto 1);
+--            subpacket0_bits <= adp_subpacket0_bits & subpacket0_bits(subpacket0_bits'high downto 2);
+--            subpacket1_bits <= adp_subpacket1_bits & subpacket1_bits(subpacket1_bits'high downto 2);
+--            subpacket2_bits <= adp_subpacket2_bits & subpacket2_bits(subpacket2_bits'high downto 2);
+--            subpacket3_bits <= adp_subpacket3_bits & subpacket3_bits(subpacket3_bits'high downto 2);
+--            
+--            audio_de      <= '0';
+--
+--            if grab_other_channel = '1' then
+--                audio_de           <= header_bits(7);
+--                audio_channel      <= "001";
+--                audio_sample       <= subpacket0_bits(45 downto 22);
+--                grab_other_channel <= '0';
+--            end if;
+--            if frame_bits = x"FFFFFFFE" then
+--                ------------------------------------------------
+--                -- Check the packet type as being audio samples
+--                ------------------------------------------------
+--                if header_bits(7 downto 0) = x"02" then
+--                    audio_de      <= header_bits(8);
+--                    audio_channel <= "000";
+--                    audio_sample  <= subpacket0_bits(23 downto 0);
+--                    grab_other_channel <= '1';                      
+--                end if;
+--            end if;
+--        end if;
+--    end process;
+--    
+--end Behavioral;
